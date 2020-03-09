@@ -3,7 +3,6 @@ from multiprocessing import Process
 import threading
 from multiprocessing import Process
 import sys
-sys.path.append('twideo/')
 import dev_image
 import twitter_fetch
 app = Flask(__name__)
