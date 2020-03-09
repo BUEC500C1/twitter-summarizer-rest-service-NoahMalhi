@@ -2,9 +2,10 @@ from flask import Flask, escape, request, render_template, redirect
 from multiprocessing import Process
 import threading
 from multiprocessing import Process
-import sys
+import os
 import dev_image
 import twitter_fetch
+
 app = Flask(__name__)
 
 
@@ -62,6 +63,7 @@ def main(username):
 
     dev_image.dev_video(username, success)
 
+    os.system('rm -r *.png')
     return (tweet_texts, image_list)
 
 
