@@ -1,5 +1,11 @@
 from flask import Flask, escape, request, render_template, redirect
-
+from multiprocessing import Process
+import threading
+from multiprocessing import Process
+import sys
+sys.path.append('twideo/')
+import dev_image
+import twitter_fetch
 app = Flask(__name__)
 
 
@@ -10,12 +16,54 @@ if (__name__ == "__main__"):
 )
 
 @app.route('/')
-def hello():
+def app_call():
     return render_template("main.html")
-    #name = request.args.get("name", "World")
-    #return f'Hello, {escape(name)}!'
 
-#redirect route to data page after sign in
-@app.route("/callback")
-def callback():
+
+#redirect to page with the resulting videos
+@app.route("/render_video", methods=['POST'])
+def render_videos():
+    #on submit request usernames from html from user input
+    handle1 = request.form['handle1']
+    handle2 = request.form['handle2']
+    handle3 = request.form['handle3']
+    handle4 = request.form['handle4']
+    nameList = [handle1, handle2, handle3, handle4]
+    init_prog(nameList)
+
+   
     return render_template("data_page.html")
+
+#run up to four proccesses to make videos
+def init_prog(usernames):
+    processes = []
+
+    for name in usernames:
+        if (name != ''):
+            p = Process(target=main, args=(name,))
+            p.start()
+            processes.append(p)
+    for p in processes:
+        p.join()
+
+def main(username):
+
+    if (username.isdigit()):
+        print("Username can not be all numbers")
+        return 0
+
+    if (username == ''):
+        print("Please enter a username")
+        return 0
+    
+    image_list = []
+    (image_list, tweet_texts, success) = twitter_fetch.vision_feed(image_list, username)
+
+    dev_image.convert_text(tweet_texts, image_list, username)
+
+    dev_image.dev_video(username, success)
+
+    return (tweet_texts, image_list)
+
+
+    
