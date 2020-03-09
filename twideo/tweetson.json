@@ -1,0 +1,19 @@
+{
+    "twittertest":
+    [
+        {
+            "Tweet": "This is a pytest test tweet",
+            "Image": "0"
+        },
+
+        {
+            "Tweet": "Seconds test tweet",
+            "Image": "https://pbs.twimg.com/media/ERkrNheVAAAMcIq?format=png&name=small"
+        },
+
+        {
+            "Tweet": "Thirdd, no image",
+            "Image": "0"
+        }
+    ]
+}

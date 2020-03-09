@@ -1,0 +1,19 @@
+.title {
+    color: #4F73D5;
+    FONT-SIZE:2REM;
+    FONT-FAMILY:"Trocci",Serif;
+    WIDTH: 100%;
+    TEXT-ALIGN: CENTER;
+    DISPLAY:BLOCK;
+    POSITION:RELATIVE;
+}
+
+
+.developer{
+    position: fixed;
+    left: 50%;
+    bottom: 20px;
+    transform: translate(-50%, -50%);
+    margin: 0 auto;
+    border: 3px solid #010101;
+}

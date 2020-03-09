@@ -1,0 +1,6 @@
+wget==3.2
+tweepy == 3.8.0
+Pillow==5.4.1
+ffmpeg==1.4
+
+
