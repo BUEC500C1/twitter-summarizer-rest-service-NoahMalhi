@@ -7,7 +7,7 @@ def dev_video(username, success):
     #each process runs ffmpeg using its own username.png files
     if (success == 1): 
         pid = os.getpid()
-        os.system('ffmpeg -framerate 0.33 -i '+username+'%d.png video'+str(pid)+'.avi')
+        os.system('ffmpeg -framerate 0.33 -i '+username+'%d.png vid_dir/video'+str(pid)+'.avi')
     else:
         return
 

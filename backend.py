@@ -1,10 +1,11 @@
-from flask import Flask, escape, request, render_template, redirect
+from flask import Flask, send_file, request, render_template, redirect
 from multiprocessing import Process
 import threading
 from multiprocessing import Process
 import os
 import dev_image
 import twitter_fetch
+import zipfile
 
 app = Flask(__name__)
 
@@ -21,18 +22,29 @@ def app_call():
 
 
 #redirect to page with the resulting videos
-@app.route("/render_video", methods=['POST'])
+@app.route("/", methods=['POST'])
 def render_videos():
     #on submit request usernames from html from user input
     handle1 = request.form['handle1']
     handle2 = request.form['handle2']
     handle3 = request.form['handle3']
     handle4 = request.form['handle4']
+    os.system("rm -r *.png")
+    os.system("rm -r *.jpg")
+    os.system("rm -r vid_dir/*")
+    
     nameList = [handle1, handle2, handle3, handle4]
     init_prog(nameList)
 
-   
-    return render_template("data_page.html")
+
+    zip_it = zipfile.ZipFile('results.zip','w', zipfile.ZIP_DEFLATED)
+    for root, directs, files in os.walk('vid_dir/'):
+        for vid in files:
+            zip_it.write('vid_dir/' + str(vid))
+    zip_it.close()
+ 
+    return send_file('results.zip', mimetype ='zip', attachment_filename = 'results.zip', as_attachment=True)
+
 
 #run up to four proccesses to make videos
 def init_prog(usernames):
@@ -63,7 +75,8 @@ def main(username):
 
     dev_image.dev_video(username, success)
 
-    os.system('rm -r *.png')
+    os.system("rm -r *.png")
+    os.system("rm -r *.jpg")
     return (tweet_texts, image_list)
 
 
