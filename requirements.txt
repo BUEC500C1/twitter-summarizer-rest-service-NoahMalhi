@@ -1,6 +1,6 @@
 wget==3.2
 tweepy == 3.8.0
-Pillow==5.4.1
+Pillow==8.2.0
 ffmpeg==1.4
 Flask==1.1.1
 zipp==3.0.0
